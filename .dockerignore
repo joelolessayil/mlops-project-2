@@ -1,0 +1,17 @@
+# Python virtual environment
+venv
+.venv
+
+# Git files
+.git
+.gitignore
+
+# Pycache
+__pycache__/
+*.pyc
+
+# W&B local logs
+wandb/
+
+# Checkpoint models
+models/
