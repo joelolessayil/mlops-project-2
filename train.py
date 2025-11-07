@@ -12,11 +12,9 @@ def main(args):
     L.seed_everything(args.seed)
 
     # --- Setup Logger ---
-    # Use a descriptive name for the W&B run
     run_name = f"[{args.run_tag}]-{args.model_name_or_path.split('/')[-1]}-{args.task_name}-lr{args.learning_rate}-bs{args.train_batch_size}"
     wandb_logger = WandbLogger(project="newcrosoft-project-2", name=run_name)
     
-    # Optional: Log in to W&B if you haven't via the CLI
     # wandb.login(key="YOUR_API_KEY") 
 
     # --- Setup Data ---
@@ -27,7 +25,7 @@ def main(args):
         train_batch_size=args.train_batch_size,
         eval_batch_size=args.eval_batch_size,
     )
-    # This is crucial! It downloads data and sets up num_labels
+
     dm.setup("fit") 
 
     # --- Setup Model ---
@@ -77,13 +75,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--weight_decay", 
         type=float, 
-        default=0.05,  # <-- UPDATED to best value
+        default=0.05,  
         help="Weight decay for the optimizer."
     )
     parser.add_argument(
         "--run_tag",
         type=str,
-        default="local_py", # <-- NEW argument
+        default="local_py", # 
         help="Tag to identify the run source (e.g., local_py, docker_build)"
     )
 
