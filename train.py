@@ -13,7 +13,7 @@ def main(args):
 
     # --- Setup Logger ---
     # Use a descriptive name for the W&B run
-    run_name = f"{args.model_name_or_path.split('/')[-1]}-{args.task_name}-lr{args.learning_rate}-bs{args.train_batch_size}"
+    run_name = f"[{args.run_tag}]-{args.model_name_or_path.split('/')[-1]}-{args.task_name}-lr{args.learning_rate}-bs{args.train_batch_size}"
     wandb_logger = WandbLogger(project="newcrosoft-project-2", name=run_name)
     
     # Optional: Log in to W&B if you haven't via the CLI
@@ -53,7 +53,7 @@ def main(args):
     )
 
     # --- Start Training ---
-    print("Starting training...")
+    print(f"Starting training run: {run_name}")
     trainer.fit(model, datamodule=dm)
     print("Training complete.")
 
@@ -70,9 +70,21 @@ if __name__ == "__main__":
     parser.add_argument(
         "--lr", "--learning_rate", 
         type=float, 
-        default=2e-5, 
+        default=5e-5, 
         help="Learning rate for the optimizer.",
         dest="learning_rate"
+    )
+    parser.add_argument(
+        "--weight_decay", 
+        type=float, 
+        default=0.05,  # <-- UPDATED to best value
+        help="Weight decay for the optimizer."
+    )
+    parser.add_argument(
+        "--run_tag",
+        type=str,
+        default="local_py", # <-- NEW argument
+        help="Tag to identify the run source (e.g., local_py, docker_build)"
     )
 
     # Add other hyperparameters
@@ -80,11 +92,11 @@ if __name__ == "__main__":
     parser.add_argument("--task_name", type=str, default="mrpc")
     parser.add_argument("--max_seq_length", type=int, default=128)
     parser.add_argument("--warmup_steps", type=int, default=0)
-    parser.add_argument("--weight_decay", type=float, default=0.0)
     parser.add_argument("--train_batch_size", type=int, default=32)
     parser.add_argument("--eval_batch_size", type=int, default=32)
     parser.add_argument("--max_epochs", type=int, default=3)
     parser.add_argument("--seed", type=int, default=42)
-
+    
     args = parser.parse_args()
+    
     main(args)

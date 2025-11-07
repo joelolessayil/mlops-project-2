@@ -16,10 +16,5 @@ COPY . .
 # 6. Set the command to run when the container starts
 # Replace the arguments below with your best hyperparameters from Project 1
 CMD ["python", "train.py", \
-     "--max_epochs", "3", \
-     "--learning_rate", "5e-5", \
-     "--train_batch_size", "32", \
-     "--weight_decay", "0.05", \
-     "--warmup_steps", "0", \
-     "--checkpoint_dir", "/app/models" \
+     "--run_tag", "docker_build" \
     ]
