@@ -19,7 +19,6 @@ This project can be run locally on any machine with Docker installed, or in a cl
 
 ```bash
 git clone https://github.com/joelolessayil/mlops-project-2.git
-
 cd mlops-project-2
 ```
 
